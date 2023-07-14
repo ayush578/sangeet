@@ -6,7 +6,12 @@ from . import views
 app_name = "App"
 
 urlpatterns = [
-    path("", views.index, name="index"),
-
-
+    path("", views.home, name="home"),
+    path("playlist/<id>",views.playlist, name="playlist"),
+    path("likedsongs",views.likedsongs, name="likedsongs"),
+    path("login",views.login, name="login"),
+    path("register",views.register,name="register"),
+    path("logout",views.logout, name="logout"),
+    path("song",views.song, name="song"),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

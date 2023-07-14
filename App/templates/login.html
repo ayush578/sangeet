@@ -1,0 +1,17 @@
+{% extends 'basic.html' %}
+{% block title %} login {% endblock %}
+{% block body %}
+{% for message in messages %}
+<div class="alert alert-info alert-dismissible fade show" role="alert" >
+	{{message}}
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+<form action="login" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="username" required value="{{username}}"><br>
+    <input type="password" name="password" placeholder="password" required value="{{pss}}"><br>
+    <input type="submit">
+</form>
+
+{% endblock %}
