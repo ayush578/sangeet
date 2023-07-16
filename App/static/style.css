@@ -44,8 +44,8 @@ h3 {
 }
 .cover {
     float: left;
-    width: 100%;
-    height: 66%;
+    width: 70%;
+    height: 50%;
 }
 .cover img {
     display: block;
@@ -53,6 +53,7 @@ h3 {
     top: 8%;
     left: 14%;
     width: 70%;
+    height: 50%;
     margin: auto;
     text-align: center;
 }

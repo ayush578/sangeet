@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 # Create your models here.
 class Song(models.Model):
-    # song_id=models.AutoField()
     title = models.TextField(default="")
     artist = models.TextField(default="")
     image = models.ImageField()
@@ -15,7 +14,6 @@ class Song(models.Model):
         return self.title
 
 class Category(models.Model):
-    # id=models.AutoField()
     name = models.TextField()
     public = models.BooleanField(default=False)
     priority = models.IntegerField(default=0)
@@ -23,7 +21,6 @@ class Category(models.Model):
         return self.name
 
 class Playlist(models.Model):
-    # id = models.AutoField()
     name = models.TextField()
     category = models.ForeignKey(Category,on_delete=models.SET_NULL,null=True)
     songs = models.ManyToManyField(Song)
@@ -41,3 +38,12 @@ class UserSong(models.Model):
         unique_together = ('user','song',)
     def __str__(self):
         return self.user.username+"_"+self.song.title
+
+class Queue(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,default="")
+    pointer = models.IntegerField(default=0)
+    songs = models.ManyToManyField(Song)
+    shuffle = models.BooleanField(default=False)
+    repeat = models.BooleanField(default=False)
+    def __str__(self):
+        return self.user.username

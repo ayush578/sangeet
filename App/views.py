@@ -1,7 +1,7 @@
 from math import ceil
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
-from . models import Song,Playlist,Category,UserSong
+from . models import Song,Playlist,Category,UserSong,Queue
 from django.http import HttpResponse
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
@@ -87,8 +87,30 @@ def song(request):
     paginator= Paginator(Song.objects.all(),1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    for item in page_obj:
-        print(item.image)
     context={"page_obj":page_obj}
     return render(request,"index.html",context)
 
+def playsong(request):
+    if not request.user.is_authenticated:
+        messages.info(request,"please login first before playing a song")
+        return redirect("/")
+    # queue = Queue.objects.filter(user=request.user)[0]
+    # queue.pointer+=1
+    # queue.save()
+    # print(queue.pointer)
+    # print(Queue.objects.filter(user=request.user)[0].pointer)
+    paginator= Paginator(Queue.objects.filter(user=request.user)[0].songs.all(),1)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    # for item in page_obj:
+    #     print(item.image)
+    context={"page_obj":page_obj}
+    return render(request,"playsong.html",context)
+
+def queue(request):
+    if not request.user.is_authenticated:
+        messages.info(request,"please login first to access queue")
+        return redirect("/")
+    queue = Queue.objects.filter(user=request.user)
+    params = {"queue":queue[0]}
+    return render(request,"queue.html",params)
