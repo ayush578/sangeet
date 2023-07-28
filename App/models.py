@@ -41,7 +41,7 @@ class UserSong(models.Model):
 
 class Queue(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,default="")
-    pointer = models.IntegerField(default=0)
+    pointer = models.IntegerField(default=1)
     songs = models.ManyToManyField(Song)
     shuffle = models.BooleanField(default=False)
     repeat = models.BooleanField(default=False)

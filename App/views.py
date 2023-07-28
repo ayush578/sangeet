@@ -17,7 +17,9 @@ def home(request):
         n = len(playlists)
         nSlides = n // 4 + ceil((n / 4) - (n // 4))
         data.append([playlists, range(1, nSlides), nSlides, cat.name])
-    params = {'data':data,'signin':0}
+    queue = Queue.objects.filter(user=request.user)[0]
+    print(len(queue.songs.all()))
+    params = {'data':data,'signin':0,'queue':queue,'total_songs':len(queue.songs.all())}
     if request.user.is_authenticated:
         params['signin']=1
     return render(request,"home.html",params)
